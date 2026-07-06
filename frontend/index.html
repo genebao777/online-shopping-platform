@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>Azure Deploy Chatbot</title>
+</head>
+<body>
+    <h1>AI 智能客服測試面板</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="msg" placeholder="輸入訊息...">
+    <button onclick="send()">發送</button>
+
+    <script>
+        async function send() {
+            const msg = document.getElementById('msg').value;
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: msg})
+            });
+            const data = await res.json();
+            document.getElementById('chatbox').innerHTML += `<p>你: ${msg}</p><p>AI: ${data.reply}</p>`;
+        }
+    </script>
+</body>
+</html>
